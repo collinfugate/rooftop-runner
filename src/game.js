@@ -26,13 +26,26 @@ function preload() {
 		frameWidth: 32,
 		frameHeight: 32
 	});
+
+	this.load.image("ground", "https://labs.phaser.io/assets/sprites/platform.png");
 }
 function create() {
-	this.textures.get("ninja").setFilter(Phaser.Textures.FilterMode.NEAREST); // Prevents Phaser from smoothing the pixel art when scaled
 
-	player = this.physics.add.sprite(100, 450, "ninja", 0);
+	// prevents Phaser from smoothing the pixel art when scaled
+	this.textures.get("ninja").setFilter(Phaser.Textures.FilterMode.NEAREST);
+
+	player = this.physics.add.sprite(400, 500, "ninja", 0);
 	player.setCollideWorldBounds(true);
 	player.setScale(3);
+
+	// set custom hitbox size to match ninja’s visible body
+	player.body.setSize(12, 15, true);
+	player.body.setOffset(10, 11);
+
+	const platforms = this.physics.add.staticGroup();
+	platforms.create(400, 500, "ground").setScale(2).refreshBody();
+
+	this.physics.add.collider(player, platforms);
 
 	this.input.keyboard.on("keydown-SPACE", () => {
 		player.setVelocityY(-400);
