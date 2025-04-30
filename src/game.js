@@ -21,6 +21,8 @@ const config = {
 
 let player;
 
+const RUN_SPEED = 100;
+
 function preload() {
 	this.load.spritesheet("ninja", "/assets/ninja/ninja-black-32x32.png", {
 		frameWidth: 32,
@@ -34,7 +36,8 @@ function create() {
 	// prevents Phaser from smoothing the pixel art when scaled
 	this.textures.get("ninja").setFilter(Phaser.Textures.FilterMode.NEAREST);
 
-	player = this.physics.add.sprite(400, 500, "ninja", 0);
+	player = this.physics.add.sprite(400, 400, "ninja", 1);
+	player.setVelocityX(RUN_SPEED);
 	player.setCollideWorldBounds(true);
 	player.setScale(3);
 
