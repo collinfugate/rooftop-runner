@@ -22,12 +22,17 @@ const config = {
 let player;
 
 function preload() {
-	this.load.image("player", "https://labs.phaser.io/assets/sprites/phaser-dude.png");
+	this.load.spritesheet("ninja", "/assets/ninja/ninja-black-32x32.png", {
+		frameWidth: 32,
+		frameHeight: 32
+	});
 }
-
 function create() {
-	player = this.physics.add.sprite(100, 450, "player");
+	this.textures.get("ninja").setFilter(Phaser.Textures.FilterMode.NEAREST); // Prevents Phaser from smoothing the pixel art when scaled
+
+	player = this.physics.add.sprite(100, 450, "ninja", 0);
 	player.setCollideWorldBounds(true);
+	player.setScale(3);
 
 	this.input.keyboard.on("keydown-SPACE", () => {
 		player.setVelocityY(-400);
