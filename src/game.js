@@ -21,17 +21,17 @@ const config = {
 
 let player;
 
-const RUN_SPEED = 300;
+const RUN_SPEED = 400;
 
 function preload() {
-	this.load.spritesheet("ninja", "/assets/ninja/ninja-black-32x32.png", {
+	this.load.spritesheet("ninja", "/assets/used/sprite-ninja.png", {
 		frameWidth: 32,
 		frameHeight: 32
 	});
 
 	this.load.image("platform", "https://labs.phaser.io/assets/sprites/platform.png");
 
-	this.load.image("background", "/assets/backgrounds/city 1/10.png");
+	this.load.image("background", "/assets/used/background-city1-10.png");
 
 }
 function create() {
