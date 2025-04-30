@@ -21,7 +21,7 @@ const config = {
 
 let player;
 
-const RUN_SPEED = 100;
+const RUN_SPEED = 300;
 
 function preload() {
 	this.load.spritesheet("ninja", "/assets/ninja/ninja-black-32x32.png", {
@@ -37,8 +37,8 @@ function create() {
 	this.textures.get("ninja").setFilter(Phaser.Textures.FilterMode.NEAREST);
 
 	player = this.physics.add.sprite(400, 400, "ninja", 1);
+	this.cameras.main.startFollow(player);
 	player.setVelocityX(RUN_SPEED);
-	player.setCollideWorldBounds(true);
 	player.setScale(3);
 
 	// set custom hitbox size to match ninja’s visible body
@@ -46,10 +46,16 @@ function create() {
 	player.body.setOffset(10, 11);
 
 	const platforms = this.physics.add.staticGroup();
-	platforms.create(400, 500, "ground").setScale(2).refreshBody();
+
+	// platforms
+	const ground1 = platforms.create(400, 500, "ground");
+	ground1.setScale(2).refreshBody();
+	const ground2 = platforms.create(1600, 500, "ground");
+	ground2.setScale(2).refreshBody();
+	const ground3 = platforms.create(2800, 500, "ground");
+	ground3.setScale(2).refreshBody();
 
 	this.physics.add.collider(player, platforms);
-
 	this.input.keyboard.on("keydown-SPACE", () => {
 		player.setVelocityY(-400);
 	});
