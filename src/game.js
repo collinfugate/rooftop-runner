@@ -21,7 +21,7 @@ const config = {
 
 let player;
 
-const RUN_SPEED = 400;
+const RUN_SPEED = 500;
 
 function preload() {
 	this.load.spritesheet("ninja", "/assets/used/sprite-ninja.png", {
@@ -72,14 +72,32 @@ function create() {
 	const platforms = this.physics.add.staticGroup();
 
 	// platforms
-	const platform1 = platforms.create(400, 500, "platform");
-	platform1.setScale(2).refreshBody();
+	const platform1 = platforms.create(600, 500, "platform");
+	platform1.setScale(1).refreshBody();
 
 	const platform2 = platforms.create(1600, 500, "platform");
-	platform2.setScale(2).refreshBody();
+	platform2.setScale(1).refreshBody();
 
-	const platform3 = platforms.create(2800, 500, "platform");
-	platform3.setScale(2).refreshBody();
+	const platform4 = platforms.create(2600, 500, "platform");
+	platform4.setScale(1).refreshBody();
+
+	const platform5 = platforms.create(3600, 500, "platform");
+	platform5.setScale(1).refreshBody();
+
+	const platform7 = platforms.create(4600, 500, "platform");
+	platform7.setScale(1).refreshBody();
+
+	const platform8 = platforms.create(5600, 500, "platform");
+	platform8.setScale(1).refreshBody();
+
+	const platform9 = platforms.create(6600, 500, "platform");
+	platform9.setScale(1).refreshBody();
+
+	const platform10 = platforms.create(7600, 500, "platform");
+	platform10.setScale(1).refreshBody();
+
+	const platform11 = platforms.create(8600, 500, "platform");
+	platform11.setScale(1).refreshBody();
 
 	this.physics.add.collider(player, platforms);
 	this.input.keyboard.on("keydown-SPACE", () => {
