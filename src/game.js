@@ -3,7 +3,6 @@ import Phaser from "phaser";
 let player;
 let gameStarted = false;
 let gamePaused = true;
-let highContrast = false;
 
 const RUN_SPEED = 500;
 
