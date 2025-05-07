@@ -3,6 +3,7 @@ import Phaser from "phaser";
 let player;
 let gameStarted = false;
 let gamePaused = true;
+let highContrast = true;
 
 const RUN_SPEED = 500;
 
@@ -10,7 +11,7 @@ const config = {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
-  backgroundColor: "#222",
+  backgroundColor: "#f0f0f0",
   physics: {
     default: "arcade",
     arcade: {
@@ -42,11 +43,12 @@ function create() {
   gameStarted = false;
   gamePaused = true;
 
-  this.add
-    .image(0, 0, "background")
-    .setOrigin(0, 0)
-    .setScrollFactor(0)
-    .setDisplaySize(800, 600);
+  if (!highContrast)
+    this.add
+      .image(0, 0, "background")
+      .setOrigin(0, 0)
+      .setScrollFactor(0)
+      .setDisplaySize(800, 600);
 
   this.anims.create({
     key: "idle",
@@ -114,7 +116,7 @@ function create() {
   this.startText = this.add
     .text(400, 300, "Press Space to Start", {
       fontSize: "32px",
-      fill: "#fff",
+      fill: highContrast ? "#000" : "#fff",
     })
     .setOrigin(0.5);
 
@@ -161,10 +163,22 @@ function update() {
     player.body.allowGravity = false;
     player.anims.play("death", true);
 
+    // adds white box behind game over text in high constrast mode
+    if (highContrast) {
+      this.add
+        .rectangle(player.x, player.y - 53, 300, 50, 0xf0f0f0)
+        .setOrigin(0.5);
+    }
+    if (highContrast) {
+      this.add
+        .rectangle(player.x, player.y + 60, 350, 30, 0xf0f0f0)
+        .setOrigin(0.5);
+    }
+
     const gameOverText = this.add
       .text(player.x, player.y - 50, "GAME OVER", {
         fontSize: "48px",
-        fill: "#fff",
+        fill: highContrast ? "#000" : "#fff",
       })
       .setOrigin(0.5);
 
@@ -177,7 +191,7 @@ function update() {
     this.add
       .text(player.x, player.y + 60, "Press Space to Restart", {
         fontSize: "24px",
-        fill: "#fff",
+        fill: highContrast ? "#000" : "#fff",
       })
       .setOrigin(0.5);
   }
