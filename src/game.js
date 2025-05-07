@@ -3,7 +3,7 @@ import Phaser from "phaser";
 let player;
 let gameStarted = false;
 let gamePaused = true;
-let highContrast = true;
+let highContrast = false;
 
 const RUN_SPEED = 500;
 
@@ -43,7 +43,9 @@ function create() {
   gameStarted = false;
   gamePaused = true;
 
-  if (!highContrast)
+  this.highContrast = this.scene.settings.data?.highContrast ?? false;
+
+  if (!this.highContrast)
     this.add
       .image(0, 0, "background")
       .setOrigin(0, 0)
@@ -116,7 +118,7 @@ function create() {
   this.startText = this.add
     .text(400, 300, "Press Space to Start", {
       fontSize: "32px",
-      fill: highContrast ? "#000" : "#fff",
+      fill: this.highContrast ? "#000" : "#fff",
     })
     .setOrigin(0.5);
 
@@ -138,6 +140,23 @@ function create() {
     if (!gamePaused && player.body.blocked.down) {
       player.setVelocityY(-400);
     }
+  });
+
+  this.contrastLabel = this.add.text(
+    10,
+    10,
+    this.highContrast
+      ? "Press H to disable High Contrast Mode"
+      : "Press H to enable High Contrast Mode",
+    {
+      fontSize: "16px",
+      fill: this.highContrast ? "#000" : "#fff",
+    }
+  );
+  this.contrastLabel.setScrollFactor(0);
+
+  this.input.keyboard.on("keydown-H", () => {
+    this.scene.restart({ highContrast: !this.highContrast });
   });
 }
 
@@ -164,12 +183,12 @@ function update() {
     player.anims.play("death", true);
 
     // adds white box behind game over text in high constrast mode
-    if (highContrast) {
+    if (this.highContrast) {
       this.add
         .rectangle(player.x, player.y - 53, 300, 50, 0xf0f0f0)
         .setOrigin(0.5);
     }
-    if (highContrast) {
+    if (this.highContrast) {
       this.add
         .rectangle(player.x, player.y + 60, 350, 30, 0xf0f0f0)
         .setOrigin(0.5);
@@ -178,7 +197,7 @@ function update() {
     const gameOverText = this.add
       .text(player.x, player.y - 50, "GAME OVER", {
         fontSize: "48px",
-        fill: highContrast ? "#000" : "#fff",
+        fill: this.highContrast ? "#000" : "#fff",
       })
       .setOrigin(0.5);
 
@@ -191,7 +210,7 @@ function update() {
     this.add
       .text(player.x, player.y + 60, "Press Space to Restart", {
         fontSize: "24px",
-        fill: highContrast ? "#000" : "#fff",
+        fill: this.highContrast ? "#000" : "#fff",
       })
       .setOrigin(0.5);
   }
