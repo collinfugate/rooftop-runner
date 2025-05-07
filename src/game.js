@@ -32,10 +32,7 @@ function preload() {
     frameHeight: 32,
   });
 
-  this.load.image(
-    "platform",
-    "https://labs.phaser.io/assets/sprites/platform.png"
-  );
+  this.load.image("platform", "/assets/used/building.png");
 
   this.load.image("background", "/assets/used/background-city1-10.png");
 }
@@ -95,34 +92,22 @@ function create() {
   player.body.setSize(12, 15, true);
   player.body.setOffset(10, 11);
 
+  // helper function to create platforms
+  function createPlatform(scene, group, x, y) {
+    const platform = group.create(x, y, "platform").setScale(0.5).refreshBody();
+
+    platform.body.setSize(platform.displayWidth * 0.64, 10);
+    platform.body.setOffset(95, 15);
+    return platform;
+  }
+
   const platforms = this.physics.add.staticGroup();
 
-  const platform1 = platforms.create(600, 500, "platform");
-  platform1.setScale(1).refreshBody();
-
-  const platform2 = platforms.create(1600, 500, "platform");
-  platform2.setScale(1).refreshBody();
-
-  const platform4 = platforms.create(2600, 500, "platform");
-  platform4.setScale(1).refreshBody();
-
-  const platform5 = platforms.create(3600, 500, "platform");
-  platform5.setScale(1).refreshBody();
-
-  const platform7 = platforms.create(4600, 500, "platform");
-  platform7.setScale(1).refreshBody();
-
-  const platform8 = platforms.create(5600, 500, "platform");
-  platform8.setScale(1).refreshBody();
-
-  const platform9 = platforms.create(6600, 500, "platform");
-  platform9.setScale(1).refreshBody();
-
-  const platform10 = platforms.create(7600, 500, "platform");
-  platform10.setScale(1).refreshBody();
-
-  const platform11 = platforms.create(8600, 500, "platform");
-  platform11.setScale(1).refreshBody();
+  // loop adding platforms
+  for (let i = 0; i < 20; i++) {
+    const x = 500 + i * 830;
+    createPlatform(this, platforms, x, 670);
+  }
 
   this.physics.add.collider(player, platforms);
 
@@ -170,7 +155,7 @@ function update() {
   }
 
   // fall detection
-  if (player.y > 1000 && !gamePaused) {
+  if (player.y > 580 && !gamePaused) {
     gamePaused = true;
     player.setVelocity(0, 0);
     player.body.allowGravity = false;
